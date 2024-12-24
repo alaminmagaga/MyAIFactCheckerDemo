@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fact-Checking and Conversational Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background: #0078d4;
+            color: white;
+            padding: 20px 10px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #0078d4;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        textarea, input[type="url"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover {
+            background-color: #005bb5;
+        }
+        pre {
+            background: #f8f8f8;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #ddd;
+        }
+        p {
+            margin: 10px 0;
+        }
+        p.error {
+            color: red;
+            font-weight: bold;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ddd;
+            margin: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Fact-Checking and Conversational Assistant</h1>
+    </header>
+    <main>
+        <!-- User Input Form -->
+        <section>
+            <h2>Check User Input</h2>
+            <form method="post">
+                {% csrf_token %}
+                <label for="user_input">Enter your query or claim:</label>
+                <textarea id="user_input" name="user_input" rows="4" placeholder="Type your input here..."></textarea>
+                <button type="submit">Submit User Input</button>
+            </form>
+            {% if user_input_result %}
+                <h3>Result for User Input:</h3>
+                <pre>{{ user_input_result }}</pre>
+            {% endif %}
+            {% if user_input_error %}
+                <p class="error">{{ user_input_error }}</p>
+            {% endif %}
+        </section>
+
+        <hr>
+
+        <!-- Webpage Fact-Checking Form -->
+        <section>
+            <h2>Fact-Check a Webpage</h2>
+            <form method="post">
+                {% csrf_token %}
+                <label for="webpage_url">Enter the Webpage URL:</label>
+                <input type="url" id="webpage_url" name="webpage_url" placeholder="https://example.com" required>
+                <button type="submit">Fact-Check Webpage</button>
+            </form>
+            {% if webpage_result %}
+                <h3>Result for Webpage:</h3>
+                <pre>{{ webpage_result }}</pre>
+            {% endif %}
+            {% if webpage_error %}
+                <p class="error">{{ webpage_error }}</p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>
